@@ -12,10 +12,7 @@ public class Hotel {
     private double price;
     private String description;
     private double rating;
-
-//    @Lob
-//    private byte[] image; // Champ pour stocker l'image de l'hôtel en tant qu'octets
-
+    private String imageUrl;
 
     public Hotel () {
     }
@@ -71,7 +68,11 @@ public class Hotel {
         this.rating = rating;
     }
 
-//    public byte[] getImage() {return image;}
-//    public void setImage(byte[] image) {this.image = image;}
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
