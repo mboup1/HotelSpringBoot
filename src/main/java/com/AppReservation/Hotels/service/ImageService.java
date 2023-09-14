@@ -1,29 +1,41 @@
 package com.AppReservation.Hotels.service;
 
-import com.AppReservation.Hotels.model.Hotel;
 import com.AppReservation.Hotels.model.Image;
 import com.AppReservation.Hotels.repository.ImageRepository;
+import com.AppReservation.Hotels.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImageService {
-    private final ImageRepository imageRepository;
 
     @Autowired
-    public ImageService(ImageRepository imageRepository) {
-        this.imageRepository = imageRepository;
+    private ImageRepository imageRepository;
+
+    public String uploadImage(MultipartFile file) throws IOException {
+
+        Image image = imageRepository.save(Image.builder()
+                .name(file.getOriginalFilename())
+                .type(file.getContentType())
+                .imageData(ImageUtils.compressImage(file.getBytes())).build());
+        if (image != null) {
+            return "file uploaded successfully : " + file.getOriginalFilename();
+        }
+        return null;
     }
 
-    public Image createImage(byte[] imageData) {
-        Image image = new Image();
-        return imageRepository.save(image);
+    public byte[] downloadImage(long id){
+        Optional<Image> dbImageData = imageRepository.findById(id);
+        byte[] imageShow= ImageUtils.decompressImage(dbImageData.get().getImageData());
+        return imageShow;
     }
-
-    public List<Image> getImages() {
+    public List< Image> getImages() {
         List<Image> images = new ArrayList<>();
         imageRepository.findAll().forEach(image -> {
             images.add(image);
@@ -31,13 +43,4 @@ public class ImageService {
         return images;
     }
 
-    public Image getImageById(Long id) {
-        return imageRepository.findById(id).orElse(null);
-    }
-
-    public void deleteImage(Long id) {
-        imageRepository.deleteById(id);
-    }
-
-    // Vous pouvez ajouter d'autres méthodes pour gérer les images (mise à jour, liste, etc.)
 }
