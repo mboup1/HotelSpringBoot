@@ -18,7 +18,7 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
 
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
         String uploadImage = imageService.uploadImage(file);
         return ResponseEntity.status(HttpStatus.OK)
