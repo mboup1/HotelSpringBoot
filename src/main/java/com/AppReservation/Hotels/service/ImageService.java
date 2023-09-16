@@ -42,5 +42,6 @@ public class ImageService {
         });
         return images;
     }
+    public void deleteImage(long id) { imageRepository.deleteById(id);  }
 
 }

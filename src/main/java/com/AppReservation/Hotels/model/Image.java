@@ -24,6 +24,8 @@ public class Image {
     @Column(name = "imageData",length = 1000)
     private byte[] imageData;
 
+
+
     public byte[] getImageData() {
         return imageData;
     }

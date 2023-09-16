@@ -37,4 +37,7 @@ public class ImageController {
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public void deleteHotel(@PathVariable long id){imageService.deleteImage(id);}
 }

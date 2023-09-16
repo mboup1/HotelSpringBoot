@@ -12,10 +12,6 @@ public class Hotel {
     private double price;
     private String description;
     private double rating;
-    private String imageUrl;
-    @Lob
-    @Column(name = "imageData", length = 1000) // comme dans Image.java
-    private byte[] imageData;
 
     public Hotel () {
     }
@@ -69,17 +65,5 @@ public class Hotel {
     }
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public String getImageUrl() {return imageUrl;}
-
-    public void setImageUrl(String imageUrl) {this.imageUrl = imageUrl;}
-
-    public byte[] getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
     }
 }
