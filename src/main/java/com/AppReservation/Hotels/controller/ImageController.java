@@ -1,5 +1,6 @@
 package com.AppReservation.Hotels.controller;
 
+import com.AppReservation.Hotels.model.Hotel;
 import com.AppReservation.Hotels.model.Image;
 import com.AppReservation.Hotels.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,6 @@ public class ImageController {
                 .body(uploadImage);
     }
 
-    //Obtenir toutes les images:
-    @RequestMapping(method = RequestMethod.GET, value = "/images")
-    public List<Image> getImages(){return imageService.getImages();}
-
     //Obtenir une image avec son id
     @GetMapping("/{id}")
     public ResponseEntity<?> downloadImage(@PathVariable Long id){
@@ -38,6 +35,22 @@ public class ImageController {
                 .body(imageData);
     }
 
+    //Mise à jour d'une image
+    @RequestMapping(method = RequestMethod.PUT, value = "update/{id}")
+    public ResponseEntity<?> updateImage(@PathVariable long id, @RequestParam("image") MultipartFile file) throws IOException {
+        String updateMessage = imageService.updateImage(id, file);
+        if (updateMessage.contains("successfully")) {
+            return ResponseEntity.status(HttpStatus.OK).body(updateMessage);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(updateMessage);
+        }
+    }
+
+    //Obtenir toutes les images:
+    @RequestMapping(method = RequestMethod.GET, value = "/images")
+    public List<Image> getImages(){return imageService.getImages();}
+
+    //Supprimer une image
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public void deleteHotel(@PathVariable long id){imageService.deleteImage(id);}
 }

@@ -25,10 +25,13 @@ public class HotelController {
     @RequestMapping(method =  RequestMethod.POST, value = "/hotel/{id}")
     public void addHotel(@RequestBody Hotel hotel){hotelService.addHotel(hotel);}
 
+    //Mise à jour d'un hôtel
     @RequestMapping(method =  RequestMethod.PUT, value = "/hotel/{id}")
     public void updateHotel(@RequestBody Hotel hotel, @PathVariable long id){
         hotelService.updateHotel(hotel, id);
     }
+
+    //Supprimer un hotel
     @RequestMapping(method = RequestMethod.DELETE, value = "/hotel/{id}")
     public void deleteHotel(@PathVariable long id){hotelService.deleteHotel(id);}
 
